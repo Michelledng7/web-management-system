@@ -9,9 +9,8 @@ import { useQuery } from '@apollo/client';
 export default function AddProjectModal() {
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
-	const [status, setStatus] = useState('');
+	const [status, setStatus] = useState('new');
 	const [clientId, setClientId] = useState('');
-	//const [client, setClient] = useState('');
 
 	const [addProject] = useMutation(ADD_PROJECT, {
 		variables: { name, description, status, clientId },
@@ -28,8 +27,8 @@ export default function AddProjectModal() {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		console.log(name, description);
-		if (name === '' || description === '') {
+		console.log(name, description, status, clientId);
+		if (name === '' || description === '' || clientId === '') {
 			return alert('Please fill in all fields');
 		}
 		addProject(name, description, status, clientId);
@@ -86,6 +85,7 @@ export default function AddProjectModal() {
 												onChange={(e) => setName(e.target.value)}
 											></input>
 										</div>
+
 										<div className='mb-3'>
 											<label className='form-label'>Description</label>
 											<textarea
@@ -98,7 +98,21 @@ export default function AddProjectModal() {
 										</div>
 
 										<div className='mb-3'>
-											<label className='form-label'>Client</label>
+											<label className='form-label'>Status</label>
+											<select
+												id='status'
+												className='form-select'
+												value={status}
+												onChange={(e) => setStatus(e.target.value)}
+											>
+												<option value='new'>Not Started</option>
+												<option value='progress'>In Progress</option>
+												<option value='completed'>Completed</option>
+											</select>
+										</div>
+
+										<div className='mb-3'>
+											<label className='form-label'>Select Client</label>
 											<select
 												className='form-select'
 												id='clientId'
