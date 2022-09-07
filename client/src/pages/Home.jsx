@@ -6,9 +6,12 @@ import Projects from '../components/Projects';
 export default function Home() {
 	return (
 		<>
-			<AddClientModal />
-			<AddProjectModal />
+			<div className='d-flex gap-3 mb-4'>
+				<AddClientModal />
+				<AddProjectModal />
+			</div>
 			<Projects />
+			<hr />
 			<Clients />
 		</>
 	);
