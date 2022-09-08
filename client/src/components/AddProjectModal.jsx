@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { FaList } from 'react-icons/fa';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { GET_PROJECTS } from '../queries/projectQueries';
 import { ADD_PROJECT } from '../mutations/projectMutation';
 import { GET_CLIENTS } from '../queries/clientQueries';
-import { useQuery } from '@apollo/client';
 
 export default function AddProjectModal() {
 	const [name, setName] = useState('');
@@ -20,6 +19,7 @@ export default function AddProjectModal() {
 				query: GET_PROJECTS,
 				data: { projects: [addProject, ...projects] },
 			});
+			console.log({ projects });
 		},
 	});
 
@@ -32,19 +32,22 @@ export default function AddProjectModal() {
 			return alert('Please fill in all fields');
 		}
 		addProject(name, description, status, clientId);
+		//console.log();
 		setName('');
 		setDescription('');
 		setStatus('');
 		setClientId('');
 	};
 
+	if (loading) return null;
+	if (error) return 'Something Went Wrong';
 	return (
 		<>
 			{!loading && !error && (
 				<>
 					<button
 						type='button'
-						className='btn btn-secondary'
+						className='btn btn-primary'
 						data-bs-toggle='modal'
 						data-bs-target='#addProjectModal'
 					>
@@ -64,7 +67,7 @@ export default function AddProjectModal() {
 							<div className='modal-content'>
 								<div className='modal-header'>
 									<h5 className='modal-title' id='addProjectModalLabel'>
-										Add a Project
+										New Project
 									</h5>
 									<button
 										type='button'
@@ -112,7 +115,7 @@ export default function AddProjectModal() {
 										</div>
 
 										<div className='mb-3'>
-											<label className='form-label'>Select Client</label>
+											<label className='form-label'>Client</label>
 											<select
 												className='form-select'
 												id='clientId'
