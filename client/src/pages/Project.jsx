@@ -4,6 +4,7 @@ import Spinner from '../components/Spinner';
 import { useParams, Link } from 'react-router-dom';
 import ClientInfo from '../components/ClientInfo';
 import DeleteProjectButton from '../components/DeleteProjectButton';
+import EditProjectForm from '../components/EditProjectForm';
 
 export default function Project() {
 	const { id } = useParams();
@@ -12,7 +13,7 @@ export default function Project() {
 	});
 	if (loading) return <Spinner />;
 	if (error) return <p>Something went wrong: {error}</p>;
-
+	console.log(data);
 	return (
 		<>
 			{!loading && !error && data.project && (
@@ -26,6 +27,7 @@ export default function Project() {
 					<p className='lead'>{data.project.status}</p>
 					<ClientInfo client={data.project.client} />
 					<DeleteProjectButton projectId={id} />
+					<EditProjectForm project={data.project} />
 				</div>
 			)}
 		</>

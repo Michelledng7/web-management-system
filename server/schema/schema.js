@@ -166,7 +166,6 @@ const mutation = new GraphQLObjectType({
 						},
 					}),
 				},
-				clientId: { type: GraphQLNonNull(GraphQLID) },
 			},
 			resolve(parent, args) {
 				return Project.findByIdAndUpdate(
@@ -176,7 +175,6 @@ const mutation = new GraphQLObjectType({
 							name: args.name,
 							description: args.description,
 							status: args.status,
-							clientId: args.clientId,
 						},
 					},
 					{ new: true }
